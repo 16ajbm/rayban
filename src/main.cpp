@@ -1,6 +1,6 @@
 #include <iostream>
 
-int main(){
+int main() {
     const char* message = "Hello, World!";
 
     // Print the message to the console

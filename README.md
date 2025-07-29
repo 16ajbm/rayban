@@ -27,6 +27,21 @@ A C++ ray tracer inspired by the Ray Tracing in One Weekend series by Peter Shir
    make run
    ```
 
+### Optional: `clang-format`
+
+If you want to format the code, you can install `clang-format`:
+
+```bash
+# For macOS using Homebrew
+brew install clang-format
+```
+
+Then, you can format the code using:
+
+```bash
+make format
+```
+
 ## Quick Start
 
 The Makefile provides simple commands for common tasks:
