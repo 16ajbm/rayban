@@ -67,4 +67,4 @@ debug:
 .PHONY: format
 format fmt:
 	@command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
-	@clang-format -i src/* include/* tests/*
+	@find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
