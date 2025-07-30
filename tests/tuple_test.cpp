@@ -156,3 +156,36 @@ BOOST_AUTO_TEST_CASE(MagnitudeNegativeVectorCase) {
 
     BOOST_CHECK_EQUAL(v.magnitude(), sqrt(14.0f));
 }
+
+BOOST_AUTO_TEST_CASE(NormalizeXVectorCase) {
+    Tuple v = Tuple::Vector(4.0f, 0.0f, 0.0f);
+
+    Tuple normalized = v.normalize();
+
+    BOOST_CHECK_EQUAL(normalized, Tuple::Vector(1.0f, 0.0f, 0.0f));
+}
+
+BOOST_AUTO_TEST_CASE(NormalizeVectorCase) {
+    Tuple v = Tuple::Vector(1.0f, 2.0f, 3.0f);
+    Tuple normalized = v.normalize();
+
+    // Book specifies approximate
+    BOOST_CHECK(is_equal(normalized.x, 1.0f / sqrt(14.0f)));
+    BOOST_CHECK(is_equal(normalized.y, 2.0f / sqrt(14.0f)));
+    BOOST_CHECK(is_equal(normalized.z, 3.0f / sqrt(14.0f)));
+    BOOST_CHECK(is_equal(normalized.w, 0.0f));
+}
+
+BOOST_AUTO_TEST_CASE(MagnitudeOfNormalizedVectorCase) {
+    Tuple v = Tuple::Vector(1.0f, 2.0f, 3.0f);
+    Tuple normalized = v.normalize();
+
+    BOOST_CHECK(is_equal(normalized.magnitude(), 1.0f));
+}
+
+BOOST_AUTO_TEST_CASE(DotProductCase) {
+    Tuple a = Tuple::Vector(1.0f, 2.0f, 3.0f);
+    Tuple b = Tuple::Vector(2.0f, 3.0f, 4.0f);
+
+    BOOST_CHECK_EQUAL(a.dot(b), 20.0f);
+}

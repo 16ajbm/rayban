@@ -15,6 +15,19 @@ class Tuple {
 
     float magnitude() const { return sqrt(x * x + y * y + z * z + w * w); }
 
+    Tuple normalize() const {
+        float mag = this->magnitude();
+
+        if (is_equal(mag, 0.0f)) {
+            throw std::runtime_error("Cannot normalize a zero vector!");
+        }
+        return Tuple(x / mag, y / mag, z / mag, w / mag);
+    }
+
+    float dot(const Tuple& other) const {
+        return x * other.x + y * other.y + z * other.z + w * other.w;
+    }
+
     bool is_point() const { return is_equal(w, 1.0f); }
 
     bool is_vector() const { return is_equal(w, 0.0f); }
