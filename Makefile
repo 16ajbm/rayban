@@ -25,34 +25,39 @@ help:
 
 # Create build directory and configure with CMake
 $(BUILD_DIR)/Makefile:
-	@mkdir -p $(BUILD_DIR)
+	@cmake -E make_directory $(BUILD_DIR)
 	@cd $(BUILD_DIR) && cmake -DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) ..
 
 # Build the main application
 .PHONY: build
 build: $(BUILD_DIR)/Makefile
 	@echo "Building $(PROJECT_NAME)..."
-	@cd $(BUILD_DIR) && $(MAKE) $(PROJECT_NAME)
+	@cmake --build $(BUILD_DIR) --target $(PROJECT_NAME)
 	@echo "Build complete! Executable: $(BUILD_DIR)/$(PROJECT_NAME)"
 
 # Build and run tests
 .PHONY: test
 test: $(BUILD_DIR)/Makefile
 	@echo "Building and running tests..."
-	@cd $(BUILD_DIR) && $(MAKE) $(TEST_EXECUTABLE)
-	@cd $(BUILD_DIR) && ctest --output-on-failure
+	@cmake --build $(BUILD_DIR) --target $(TEST_EXECUTABLE) --config $(CMAKE_BUILD_TYPE)
+	@cd $(BUILD_DIR) && ctest --output-on-failure -R $(TEST_EXECUTABLE) -C $(CMAKE_BUILD_TYPE)
 
 # Build and run the main application
 .PHONY: run
 run: build
 	@echo "Running $(PROJECT_NAME)..."
-	@./$(BUILD_DIR)/$(PROJECT_NAME)
+	ifeq ($(OS),Windows_NT)
+		EXE_EXT = .exe
+	else
+		EXE_EXT =
+	endif
+	@$(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
 
 # Clean build directory
 .PHONY: clean
 clean:
 	@echo "Cleaning build directory..."
-	@rm -rf $(BUILD_DIR)
+	@cmake -E remove_directory $(BUILD_DIR)
 
 # Rebuild (clean + build)
 .PHONY: rebuild
@@ -66,5 +71,13 @@ debug:
 # Format code with clang-format
 .PHONY: format
 format fmt:
-	@command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
-	@find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
+	$(FORMAT_CHECK)
+    $(FORMAT_CMD)
+
+ifeq ($(OS),Windows_NT)
+    FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)
+    FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
+else
+    FORMAT_CHECK = @command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
+    FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
+endif
