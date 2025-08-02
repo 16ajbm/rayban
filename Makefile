@@ -39,8 +39,8 @@ build: $(BUILD_DIR)/Makefile
 .PHONY: test
 test: $(BUILD_DIR)/Makefile
 	@echo "Building and running tests..."
-	@cmake --build $(BUILD_DIR) --target $(TEST_EXECUTABLE) --config $(CMAKE_BUILD_TYPE)
-	@cd $(BUILD_DIR) && ctest --output-on-failure -R $(TEST_EXECUTABLE) -C $(CMAKE_BUILD_TYPE)
+	@cmake --build $(BUILD_DIR) --config $(CMAKE_BUILD_TYPE)
+	@cd $(BUILD_DIR) && ctest --output-on-failure -C $(CMAKE_BUILD_TYPE)
 
 # Build and run the main application
 .PHONY: run

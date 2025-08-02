@@ -11,3 +11,5 @@ target_include_directories(${TEST_EXECUTABLE} PRIVATE
     ${Boost_INCLUDE_DIRS}
     ${CMAKE_SOURCE_DIR}/include
 )
+
+add_test(NAME rayban_tests COMMAND ${TEST_EXECUTABLE})
