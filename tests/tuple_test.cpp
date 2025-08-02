@@ -189,3 +189,11 @@ BOOST_AUTO_TEST_CASE(DotProductCase) {
 
     BOOST_CHECK_EQUAL(a.dot(b), 20.0f);
 }
+
+BOOST_AUTO_TEST_CASE(CrossPRoductCase) {
+    Tuple a = Tuple::Vector(1.0f, 2.0f, 3.0f);
+    Tuple b = Tuple::Vector(2.0f, 3.0f, 4.0f);
+
+    BOOST_CHECK_EQUAL(a.cross(b), Tuple::Vector(-1.0f, 2.0f, -1.0f));
+    BOOST_CHECK_EQUAL(b.cross(a), Tuple::Vector(1.0f, -2.0f, 1.0f));
+}
