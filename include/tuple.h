@@ -29,7 +29,8 @@ class Tuple {
     }
 
     Tuple cross(const Tuple& other) const {
-        return Tuple(y*other.z - other.y*z, z*other.x - other.z*x, x*other.y - other.x*y, 0.0f);
+        return Tuple(y * other.z - other.y * z, z * other.x - other.z * x,
+                     x * other.y - other.x * y, 0.0f);
     }
 
     bool is_point() const { return is_equal(w, 1.0f); }
