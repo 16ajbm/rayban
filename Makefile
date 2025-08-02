@@ -32,7 +32,7 @@ $(BUILD_DIR)/Makefile:
 .PHONY: build
 build: $(BUILD_DIR)/Makefile
 	@echo "Building $(PROJECT_NAME)..."
-	@cmake --build $(BUILD_DIR) --target $(PROJECT_NAME)
+	@cmake --build $(BUILD_DIR) --target $(PROJECT_NAME) --config $(CMAKE_BUILD_TYPE)
 	@echo "Build complete! Executable: $(BUILD_DIR)/$(PROJECT_NAME)"
 
 # Build and run tests
@@ -46,12 +46,7 @@ test: $(BUILD_DIR)/Makefile
 .PHONY: run
 run: build
 	@echo "Running $(PROJECT_NAME)..."
-	ifeq ($(OS),Windows_NT)
-		EXE_EXT = .exe
-	else
-		EXE_EXT =
-	endif
-	@$(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
+	@${RUN_CMD}
 
 # Clean build directory
 .PHONY: clean
@@ -72,12 +67,16 @@ debug:
 .PHONY: format
 format fmt:
 	$(FORMAT_CHECK)
-    $(FORMAT_CMD)
+	$(FORMAT_CMD)
 
 ifeq ($(OS),Windows_NT)
-    FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)
-    FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
+FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)
+FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
+EXE_EXT = .exe
+RUN_CMD = @$(BUILD_DIR)/$(CMAKE_BUILD_TYPE)/$(PROJECT_NAME)$(EXE_EXT)
 else
-    FORMAT_CHECK = @command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
-    FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
+FORMAT_CHECK = @command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
+FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
+EXE_EXT =
+RUN_CMD = @$(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
 endif
