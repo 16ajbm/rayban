@@ -10,14 +10,13 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
-target_include_directories(${PROJECT_NAME} PUBLIC include)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 
-# Testing
+enable_testing()
+
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost 1.55 REQUIRED COMPONENTS unit_test_framework)
 
 add_subdirectory(tests)
-
-enable_testing()
