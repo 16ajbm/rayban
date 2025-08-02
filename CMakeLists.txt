@@ -10,7 +10,7 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
 )
 
-include_directories(include)
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 
 enable_testing()
 

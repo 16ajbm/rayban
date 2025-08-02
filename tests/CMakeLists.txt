@@ -12,4 +12,4 @@ target_include_directories(${TEST_EXECUTABLE} PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
-add_test(NAME rayban_tests COMMAND ${TEST_EXECUTABLE})
+add_test(NAME ${TEST_EXECUTABLE} COMMAND ${TEST_EXECUTABLE})
