@@ -2,4 +2,5 @@
 
 #include <boost/test/unit_test.hpp>
 
-#include "tuple.h"
+#include "canvas_test.h"
+#include "tuple_test.h"
