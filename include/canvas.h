@@ -39,11 +39,28 @@ class Canvas {
         return pixels[y * width + x];
     }
 
-    std::string canvas_to_ppm() const {
+    std::string canvas_to_ppm(int max = 255) const {
         std::string ppm;
         ppm += "P3\n";
         ppm += std::to_string(width) + " " + std::to_string(height) + "\n";
-        ppm += "255\n";
+        ppm += std::to_string(max) + "\n";
+
+        int col_counter = 0;
+
+        for (const Tuple& pixel : pixels) {
+            col_counter = col_counter % width;
+
+            int r = static_cast<int>(std::round(pixel.r * max));
+            int g = static_cast<int>(std::round(pixel.g * max));
+            int b = static_cast<int>(std::round(pixel.b * max));
+
+            ppm += std::to_string(clamp(r, 0, max)) + " " +
+                   std::to_string(clamp(g, 0, max)) + " " +
+                   std::to_string(clamp(b, 0, max)) +
+                   (col_counter == width - 1 ? "\n" : " ");
+
+            col_counter += 1;
+        }
 
         return ppm;
     }

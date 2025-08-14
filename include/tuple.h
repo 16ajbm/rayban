@@ -22,9 +22,13 @@ class Tuple {
 
     Tuple(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
 
-    static Tuple Point(float x, float y, float z) { return Tuple(x, y, z, 1.0f); }
+    static Tuple Point(float x, float y, float z) {
+        return Tuple(x, y, z, 1.0f);
+    }
 
-    static Tuple Vector(float x, float y, float z) { return Tuple(x, y, z, 0.0f); }
+    static Tuple Vector(float x, float y, float z) {
+        return Tuple(x, y, z, 0.0f);
+    }
 
     static Tuple Colour(float red, float green, float blue) {
         return Tuple(red, green, blue, 0.0f);
@@ -59,8 +63,8 @@ class Tuple {
     }
 
     bool operator==(const Tuple& other) const {
-        return (is_equal(x, other.x) && is_equal(y, other.y) && is_equal(z, other.z) &&
-                is_equal(w, other.w));
+        return (is_equal(x, other.x) && is_equal(y, other.y) &&
+                is_equal(z, other.z) && is_equal(w, other.w));
     }
 
     Tuple operator+(const Tuple& other) const {
@@ -85,7 +89,8 @@ class Tuple {
     }
 
     friend std::ostream& operator<<(std::ostream& os, const Tuple& t) {
-        return os << "Tuple(" << t.x << ", " << t.y << ", " << t.z << ", " << t.w << ")";
+        return os << "Tuple(" << t.x << ", " << t.y << ", " << t.z << ", "
+                  << t.w << ")";
     }
 };
 

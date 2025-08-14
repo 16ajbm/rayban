@@ -25,7 +25,8 @@ int main() {
                           Tuple::Vector(1.0f, 1.0f, 0.0f).normalize()};
 
     // Environment
-    Environment env{Tuple::Vector(0.0f, -0.1f, 0.0f), Tuple::Vector(0.1f, 0.0f, 0.0f)};
+    Environment env{Tuple::Vector(0.0f, -0.1f, 0.0f),
+                    Tuple::Vector(0.1f, 0.0f, 0.0f)};
 
     int ticks = 0;
 
