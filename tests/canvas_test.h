@@ -38,10 +38,6 @@ BOOST_AUTO_TEST_CASE(CanvasPPMHeaderCase) {
     Canvas c(width, height);
     std::string ppm = c.canvas_to_ppm();
 
-    // Debug: Show the first few lines
-    std::cout << "PPM first 50 chars: '" << ppm.substr(0, 50) << "'"
-              << std::endl;
-
     std::string pattern;
     pattern += "^P3\\n";
     pattern += std::to_string(width) + " ";
@@ -75,7 +71,28 @@ BOOST_AUTO_TEST_CASE(CanvasPPMPixelDataCase) {
         "0 0 0 0 0 0 0 128 0 0 0 0 0 0 0\n"
         "0 0 0 0 0 0 0 0 0 0 0 0 0 0 255\n";
 
-    std::cout << "PPM Output:\n" << ppm << std::endl;
+    std::string expected_full_ppm = "P3\n" + std::to_string(width) + " " +
+                                    std::to_string(height) + "\n" + "255\n" +
+                                    expected_data;
+
+    BOOST_CHECK_EQUAL(ppm, expected_full_ppm);
+}
+
+BOOST_AUTO_TEST_CASE(CanvasPPMLineLengthCase) {
+    int width = 10;
+    int height = 2;
+
+    Tuple colour = Tuple::Colour(1.0f, 0.8f, 0.6f);
+
+    Canvas c(width, height, colour);
+
+    std::string ppm = c.canvas_to_ppm();
+
+    std::string expected_data =
+    "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
+    "153 255 204 153 255 204 153 255 204 153 255 204 153\n"
+    "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
+    "153 255 204 153 255 204 153 255 204 153 255 204 153\n";
 
     std::string expected_full_ppm = "P3\n" + std::to_string(width) + " " +
                                     std::to_string(height) + "\n" + "255\n" +
@@ -83,3 +100,11 @@ BOOST_AUTO_TEST_CASE(CanvasPPMPixelDataCase) {
 
     BOOST_CHECK_EQUAL(ppm, expected_full_ppm);
 }
+
+BOOST_AUTO_TEST_CASE(CanvasPPMEndsWithNewlineCase) {
+    Canvas c(5, 3);
+
+    std::string ppm = c.canvas_to_ppm();
+
+    BOOST_CHECK_EQUAL(ppm.back(), '\n');
+}   
