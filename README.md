@@ -1,6 +1,6 @@
 # Rayban
 
-A C++ ray tracer inspired by the Ray Tracing in One Weekend series by Peter Shirley.
+A C++ ray tracer built following the Pragmatic Programmer's [Ray Tracer Challenge](http://raytracerchallenge.com/).
 
 ## Installation
 
