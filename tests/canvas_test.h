@@ -89,10 +89,10 @@ BOOST_AUTO_TEST_CASE(CanvasPPMLineLengthCase) {
     std::string ppm = c.canvas_to_ppm();
 
     std::string expected_data =
-    "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
-    "153 255 204 153 255 204 153 255 204 153 255 204 153\n"
-    "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
-    "153 255 204 153 255 204 153 255 204 153 255 204 153\n";
+        "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
+        "153 255 204 153 255 204 153 255 204 153 255 204 153\n"
+        "255 204 153 255 204 153 255 204 153 255 204 153 255 204 153 255 204\n"
+        "153 255 204 153 255 204 153 255 204 153 255 204 153\n";
 
     std::string expected_full_ppm = "P3\n" + std::to_string(width) + " " +
                                     std::to_string(height) + "\n" + "255\n" +
@@ -107,4 +107,4 @@ BOOST_AUTO_TEST_CASE(CanvasPPMEndsWithNewlineCase) {
     std::string ppm = c.canvas_to_ppm();
 
     BOOST_CHECK_EQUAL(ppm.back(), '\n');
-}   
+}
