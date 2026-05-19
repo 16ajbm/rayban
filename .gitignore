@@ -23,3 +23,6 @@ cmake_install.cmake
 
 # macOS
 .DS_Store
+
+# PPM files
+*.ppm
