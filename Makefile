@@ -6,6 +6,10 @@ CMAKE_BUILD_TYPE ?= Release
 PROJECT_NAME = rayban
 TEST_EXECUTABLE = rayban_tests
 
+CLANG_TIDY ?= clang-tidy
+ANALYSIS_BUILD_DIR = build-analysis
+LLVM_BIN_DIR := $(dir $(shell which $(CLANG_TIDY) 2>/dev/null))
+
 # Default target
 .PHONY: all
 all: build
@@ -68,6 +72,16 @@ debug:
 format fmt:
 	$(FORMAT_CHECK)
 	$(FORMAT_CMD)
+
+# Check includes with clang-tidy (uses matching LLVM toolchain)
+.PHONY: check-includes
+check-includes:
+	@command -v $(CLANG_TIDY) >/dev/null 2>&1 || { echo >&2 "Error: clang-tidy not found. Install LLVM or set CLANG_TIDY=/path/to/clang-tidy"; exit 1; }
+	@cmake -E make_directory $(ANALYSIS_BUILD_DIR)
+	@cd $(ANALYSIS_BUILD_DIR) && CC="$(LLVM_BIN_DIR)clang" CXX="$(LLVM_BIN_DIR)clang++" \
+        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) ..
+	@$(CLANG_TIDY) -checks='-*,misc-include-cleaner' --header-filter='include/.*' \
+        -p $(ANALYSIS_BUILD_DIR) src/*.cpp tests/*.cpp
 
 ifeq ($(OS),Windows_NT)
 FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)

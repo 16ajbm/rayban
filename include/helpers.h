@@ -1,6 +1,7 @@
 #ifndef HELPERS_H
 #define HELPERS_H
 
+#include <algorithm>
 #include <cmath>
 
 const float EPSILON = 1e-5;
