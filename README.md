@@ -32,7 +32,7 @@ A C++ ray tracer inspired by the Ray Tracing in One Weekend series by Peter Shir
 If you want to format the code you can install `clang-format`, for example via:
 
 ```bash
-# MacOS
+# macOS
 brew install clang-format
 
 # Windows - LLVM (includes `clang-format`) via Chocolatey
