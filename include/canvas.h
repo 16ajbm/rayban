@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 
-#include "tuple.h"
 #include "helpers.h"
+#include "tuple.h"
 
 const int LINE_LENGTH_LIMIT = 70;
 

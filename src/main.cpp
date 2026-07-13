@@ -35,7 +35,7 @@ int main() {
     // Canvas
     int canvas_height = 250;
     int canvas_width = 250;
-    Canvas canvas(canvas_height, canvas_width, Tuple::Colour(0.0f, 0.0f, 0.0f));
+    Canvas canvas(canvas_width, canvas_height, Tuple::Colour(0.0f, 0.0f, 0.0f));
 
     // File
     std::ofstream outFile("canvas.ppm");
