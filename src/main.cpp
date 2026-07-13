@@ -55,7 +55,7 @@ int main() {
         int canvas_x = x;
         int canvas_y = canvas_height - 1 - y;
 
-        if (canvas_x > 0 && canvas_x < canvas_width && canvas_y > 0 &&
+        if (canvas_x >= 0 && canvas_x < canvas_width && canvas_y >= 0 &&
             canvas_y < canvas_height) {
             canvas.write_pixel(canvas_x, canvas_y,
                                Tuple::Colour(1.0f, 0.0f, 0.0f));
