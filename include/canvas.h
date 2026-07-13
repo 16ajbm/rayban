@@ -1,12 +1,13 @@
 #ifndef CANVAS_H
 #define CANVAS_H
 
-#include <iostream>
+#include <cmath>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
 #include "tuple.h"
+#include "helpers.h"
 
 const int LINE_LENGTH_LIMIT = 70;
 

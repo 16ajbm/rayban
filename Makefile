@@ -79,18 +79,18 @@ check-includes:
 	@command -v $(CLANG_TIDY) >/dev/null 2>&1 || { echo >&2 "Error: clang-tidy not found. Install LLVM or set CLANG_TIDY=/path/to/clang-tidy"; exit 1; }
 	@cmake -E make_directory $(ANALYSIS_BUILD_DIR)
 	@cd $(ANALYSIS_BUILD_DIR) && CC="$(LLVM_BIN_DIR)clang" CXX="$(LLVM_BIN_DIR)clang++" \
-        cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) ..
+		cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) ..
 	@$(CLANG_TIDY) -checks='-*,misc-include-cleaner' --header-filter='include/.*' \
-        -p $(ANALYSIS_BUILD_DIR) src/*.cpp tests/*.cpp
+		-p $(ANALYSIS_BUILD_DIR) src/*.cpp tests/*.cpp
 
 ifeq ($(OS),Windows_NT)
-FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)
-FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
-EXE_EXT = .exe
-RUN_CMD = @$(BUILD_DIR)/$(CMAKE_BUILD_TYPE)/$(PROJECT_NAME)$(EXE_EXT)
+  FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)
+  FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
+  EXE_EXT = .exe
+  RUN_CMD = @$(BUILD_DIR)/$(CMAKE_BUILD_TYPE)/$(PROJECT_NAME)$(EXE_EXT)
 else
-FORMAT_CHECK = @command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
-FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
-EXE_EXT =
-RUN_CMD = @$(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
+  FORMAT_CHECK = @command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
+  FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
+  EXE_EXT =
+  RUN_CMD = @$(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
 endif
