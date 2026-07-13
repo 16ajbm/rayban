@@ -34,7 +34,7 @@ class Tuple {
         return Tuple(red, green, blue, 0.0f);
     }
 
-    float magnitude() const { return sqrt(x * x + y * y + z * z + w * w); }
+    float magnitude() const { return std::sqrt(x * x + y * y + z * z + w * w); }
 
     Tuple normalize() const {
         float mag = this->magnitude();
