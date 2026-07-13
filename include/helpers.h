@@ -6,7 +6,7 @@
 
 const float EPSILON = 1e-5;
 
-inline bool is_equal(float a, float b) { return fabs(a - b) < EPSILON; }
+inline bool is_equal(float a, float b) { return std::fabs(a - b) < EPSILON; }
 
 inline int clamp(int value, int min_value, int max_value) {
     return std::max(min_value, std::min(value, max_value));
