@@ -68,7 +68,7 @@ int main() {
         outFile << ppm;
         outFile.close();
     } else {
-        std::cerr << "Undable to open file" << std::endl;
+        std::cerr << "Unable to open file" << std::endl;
     }
 
     return 0;
