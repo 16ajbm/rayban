@@ -70,13 +70,13 @@ debug:
 # Format code with clang-format
 .PHONY: format
 format fmt:
-	$(FORMAT_CHECK)
+	$(call require,clang-format)
 	$(FORMAT_CMD)
 
 # Check includes with clang-tidy (uses matching LLVM toolchain)
 .PHONY: check-includes
 check-includes:
-	@command -v $(CLANG_TIDY) >/dev/null 2>&1 || { echo >&2 "Error: clang-tidy not found. Install LLVM or set CLANG_TIDY=/path/to/clang-tidy"; exit 1; }
+	$(call require,$(CLANG_TIDY))
 	@cmake -E make_directory $(ANALYSIS_BUILD_DIR)
 	@cd $(ANALYSIS_BUILD_DIR) && CC="$(LLVM_BIN_DIR)clang" CXX="$(LLVM_BIN_DIR)clang++" \
 		cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=ON -DCMAKE_BUILD_TYPE=$(CMAKE_BUILD_TYPE) ..
@@ -84,13 +84,23 @@ check-includes:
 		-p $(ANALYSIS_BUILD_DIR) src/*.cpp tests/*.cpp
 
 ifeq ($(OS),Windows_NT)
-  FORMAT_CHECK = @where clang-format >nul 2>&1 || (echo Error: clang-format not found. Please install it. && exit 1)
-  FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
+  NULL_DEV = nul
+  WHICH = where
   EXE_EXT = .exe
+  FORMAT_CMD = @powershell -Command "Get-ChildItem -Path src,include,tests -Recurse -Include *.cpp,*.h | ForEach-Object { clang-format -i $$_.FullName }"
   RUN_CMD = @$(BUILD_DIR)/$(CMAKE_BUILD_TYPE)/$(PROJECT_NAME)$(EXE_EXT)
 else
-  FORMAT_CHECK = @command -v clang-format >/dev/null 2>&1 || { echo >&2 "Error: clang-format not found. Please install it."; exit 1; }
-  FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
+  NULL_DEV = /dev/null
+  WHICH = which
   EXE_EXT =
+  FORMAT_CMD = @find src include tests -type f \( -name "*.cpp" -o -name "*.h" \) -exec clang-format -i {} +
   RUN_CMD = @$(BUILD_DIR)/$(PROJECT_NAME)$(EXE_EXT)
+endif
+
+LLVM_BIN_DIR = $(dir $(shell $(WHICH) $(CLANG_TIDY) 2>$(NULL_DEV)))
+
+ifeq ($(OS),Windows_NT)
+  require = @$(WHICH) $(1) >$(NULL_DEV) 2>&1 || (echo Error: $(1) not found. && exit 1)
+else
+  require = @command -v $(1) >$(NULL_DEV) 2>&1 || { echo >&2 "Error: $(1) not found."; exit 1; }
 endif
