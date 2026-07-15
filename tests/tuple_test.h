@@ -1,6 +1,6 @@
-#include "tuple.h"
-
 #include <boost/test/unit_test.hpp>
+
+#include "tuple.h"
 
 BOOST_AUTO_TEST_CASE(PointTestCase) {
     float x = 1.0f;
@@ -190,10 +190,46 @@ BOOST_AUTO_TEST_CASE(DotProductCase) {
     BOOST_CHECK_EQUAL(a.dot(b), 20.0f);
 }
 
-BOOST_AUTO_TEST_CASE(CrossPRoductCase) {
+BOOST_AUTO_TEST_CASE(CrossProductCase) {
     Tuple a = Tuple::Vector(1.0f, 2.0f, 3.0f);
     Tuple b = Tuple::Vector(2.0f, 3.0f, 4.0f);
 
     BOOST_CHECK_EQUAL(a.cross(b), Tuple::Vector(-1.0f, 2.0f, -1.0f));
     BOOST_CHECK_EQUAL(b.cross(a), Tuple::Vector(1.0f, -2.0f, 1.0f));
+}
+
+BOOST_AUTO_TEST_CASE(ColourTupleCase) {
+    Tuple c = Tuple::Colour(-0.5f, 0.4f, 1.7f);
+
+    BOOST_CHECK_EQUAL(c.red, -0.5f);
+    BOOST_CHECK_EQUAL(c.green, 0.4f);
+    BOOST_CHECK_EQUAL(c.blue, 1.7f);
+}
+
+BOOST_AUTO_TEST_CASE(ColourAdditionCase) {
+    Tuple c1 = Tuple::Colour(0.9f, 0.6f, 0.75f);
+    Tuple c2 = Tuple::Colour(0.7f, 0.1f, 0.25f);
+
+    BOOST_CHECK_EQUAL(c1 + c2, Tuple::Colour(1.6f, 0.7f, 1.0f));
+}
+
+BOOST_AUTO_TEST_CASE(ColourSubtractionCase) {
+    Tuple c1 = Tuple::Colour(0.9f, 0.6f, 0.75f);
+    Tuple c2 = Tuple::Colour(0.7f, 0.1f, 0.25f);
+
+    BOOST_CHECK_EQUAL(c1 - c2, Tuple::Colour(0.2f, 0.5f, 0.5f));
+}
+
+BOOST_AUTO_TEST_CASE(ColourScalarMultiplicationCase) {
+    Tuple c = Tuple::Colour(0.2f, 0.3f, 0.4f);
+    float scalar = 2.0f;
+
+    BOOST_CHECK_EQUAL(c * scalar, Tuple::Colour(0.4f, 0.6f, 0.8f));
+}
+
+BOOST_AUTO_TEST_CASE(ColourMultiplicationCase) {
+    Tuple c1 = Tuple::Colour(1.0f, 0.2f, 0.4f);
+    Tuple c2 = Tuple::Colour(0.9f, 1.0f, 0.1f);
+
+    BOOST_CHECK_EQUAL(c1.hadamard(c2), Tuple::Colour(0.9f, 0.2f, 0.04f));
 }

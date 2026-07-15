@@ -29,11 +29,14 @@ A C++ ray tracer built following the Pragmatic Programmer's [Ray Tracer Challeng
 
 ### Optional: `clang-format`
 
-If you want to format the code, you can install `clang-format`:
+If you want to format the code you can install `clang-format`, for example via:
 
 ```bash
-# For macOS using Homebrew
+# macOS
 brew install clang-format
+
+# Windows - LLVM (includes `clang-format`) via Chocolatey
+choco install llvm -y
 ```
 
 Then, you can format the code using:
