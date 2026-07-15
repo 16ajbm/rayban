@@ -8,7 +8,6 @@ TEST_EXECUTABLE = rayban_tests
 
 CLANG_TIDY ?= clang-tidy
 ANALYSIS_BUILD_DIR = build-analysis
-LLVM_BIN_DIR := $(dir $(shell which $(CLANG_TIDY) 2>/dev/null))
 
 # Default target
 .PHONY: all

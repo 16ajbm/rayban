@@ -40,7 +40,7 @@ class Canvas {
         pixels[y * width + x] = colour;
     }
 
-    const Tuple& pixel_at(int x, int y) {
+    const Tuple& pixel_at(int x, int y) const {
         if (x < 0 || x >= width || y < 0 || y >= height) {
             throw std::out_of_range("Pixel is out of bounds");
         }
