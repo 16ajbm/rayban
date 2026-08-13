@@ -10,21 +10,15 @@ A C++ ray tracer built following the Pragmatic Programmer's [Ray Tracer Challeng
    git clone https://github.com/16ajbm/rayban.git
    ```
 
-2. Navigate to the project directory:
-
-   ```bash
-   cd rayban
-   ```
-
-3. Make sure you have the required dependencies:
+2. Make sure you have the required dependencies:
    - CMake (3.15 or higher)
    - C++ compiler with C++17 support
    - Boost libraries (1.55 or higher)
 
-4. Build and run:
+3. Build and run:
 
    ```bash
-   make run
+   cd rayban && make run
    ```
 
 ### Optional: `clang-format`
