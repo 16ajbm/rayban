@@ -5,6 +5,8 @@
 #include "canvas.h"
 #include "tuple.h"
 
+BOOST_AUTO_TEST_SUITE(CanvasTests)
+
 BOOST_AUTO_TEST_CASE(CanvasInitializationTestCase) {
     int width = 10;
     int height = 20;
@@ -109,3 +111,5 @@ BOOST_AUTO_TEST_CASE(CanvasPPMEndsWithNewlineCase) {
 
     BOOST_CHECK_EQUAL(ppm.back(), '\n');
 }
+
+BOOST_AUTO_TEST_SUITE_END()

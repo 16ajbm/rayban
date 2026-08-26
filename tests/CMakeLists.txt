@@ -12,4 +12,6 @@ target_include_directories(${TEST_EXECUTABLE} PRIVATE
     ${CMAKE_SOURCE_DIR}/include
 )
 
-add_test(NAME ${TEST_EXECUTABLE} COMMAND ${TEST_EXECUTABLE})
+add_test(NAME TupleTests COMMAND ${TEST_EXECUTABLE} --run_test=TupleTests)
+add_test(NAME CanvasTests COMMAND ${TEST_EXECUTABLE} --run_test=CanvasTests)
+add_test(NAME MatrixTests COMMAND ${TEST_EXECUTABLE} --run_test=MatrixTests)

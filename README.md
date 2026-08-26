@@ -2,7 +2,7 @@
 
 A C++ ray tracer built following the Pragmatic Programmer's [Ray Tracer Challenge](http://raytracerchallenge.com/).
 
-## Installation
+## Getting Started
 
 1. Clone the repository:
 

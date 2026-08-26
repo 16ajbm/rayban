@@ -2,6 +2,8 @@
 
 #include "tuple.h"
 
+BOOST_AUTO_TEST_SUITE(TupleTests)
+
 BOOST_AUTO_TEST_CASE(PointTestCase) {
     float x = 1.0f;
     float y = 2.0f;
@@ -233,3 +235,5 @@ BOOST_AUTO_TEST_CASE(ColourMultiplicationCase) {
 
     BOOST_CHECK_EQUAL(c1.hadamard(c2), Tuple::Colour(0.9f, 0.2f, 0.04f));
 }
+
+BOOST_AUTO_TEST_SUITE_END()
