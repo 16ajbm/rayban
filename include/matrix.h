@@ -28,6 +28,14 @@ class Matrix {
 
     Matrix<T>(NestedList rows) : Matrix(from_nested_list(rows)) {}
 
+    bool operator==(const Matrix& rhs) const {
+        // Equal if A(i,j)==B(i,j) ∀i,j when n & m are the same
+        return (this->data == rhs.data) && (this->n == rhs.n) &&
+               (this->m == rhs.m);
+    }
+
+    bool operator!=(const Matrix& rhs) const { return !(*this == rhs); }
+
     static Matrix from_nested_list(NestedList rows) {
         DimensionPair dimension_pair = dimensions(rows);
         std::vector<T> flattened_data = flatten(rows);
@@ -87,5 +95,22 @@ class Matrix {
 
     size_t index(size_t row, size_t col) const { return row * m + col; }
 };
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const Matrix<T>& matrix) {
+    for (int i = 0; i < matrix.n; i++) {
+        auto row_begin = std::next(matrix.data.begin(), matrix.m * i);
+        auto row_end = std::next(row_begin, matrix.m);
+        std::vector<T> row = std::vector<T>(row_begin, row_end);
+
+        for (T element : row) {
+            os << element;
+        }
+
+        os << "\n";
+    }
+
+    return os;
+}
 
 #endif  // TUPLE_H

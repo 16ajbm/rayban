@@ -37,4 +37,32 @@ BOOST_AUTO_TEST_CASE(Construct3x3MatrixCase) {
     BOOST_CHECK_EQUAL(matrix(2, 2), 1.0);
 }
 
+BOOST_AUTO_TEST_CASE(ConstructMatrixEqualityCase) {
+    auto matrix_a = Matrix<float>({{1.0, 2.0, 3.0, 4.0},
+                                   {5.0, 6.0, 7.0, 8.0},
+                                   {9.0, 8.0, 7.0, 6.0},
+                                   {5.0, 4.0, 3.0, 2.0}});
+
+    auto matrix_b = Matrix<float>({{1.0, 2.0, 3.0, 4.0},
+                                   {5.0, 6.0, 7.0, 8.0},
+                                   {9.0, 8.0, 7.0, 6.0},
+                                   {5.0, 4.0, 3.0, 2.0}});
+
+    BOOST_CHECK(matrix_a == matrix_b);
+}
+
+BOOST_AUTO_TEST_CASE(ConstructMatrixInequalityCase) {
+    auto matrix_a = Matrix<float>({{1.0, 2.0, 3.0, 4.0},
+                                   {5.0, 6.0, 7.0, 8.0},
+                                   {9.0, 8.0, 7.0, 6.0},
+                                   {5.0, 4.0, 3.0, 2.0}});
+
+    auto matrix_b = Matrix<float>({{2.0, 3.0, 4.0, 5.0},
+                                   {6.0, 7.0, 8.0, 9.0},
+                                   {8.0, 7.0, 6.0, 5.0},
+                                   {4.0, 3.0, 2.0, 1.0}});
+
+    BOOST_CHECK(matrix_a != matrix_b);
+}
+
 BOOST_AUTO_TEST_SUITE_END()
