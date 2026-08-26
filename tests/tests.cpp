@@ -2,6 +2,6 @@
 
 #include <boost/test/unit_test.hpp>  // NOLINT(misc-include-cleaner)
 
-#include "tuple_test.h"
 #include "canvas_test.h"
 #include "matrix_test.h"
+#include "tuple_test.h"
