@@ -65,4 +65,25 @@ BOOST_AUTO_TEST_CASE(ConstructMatrixInequalityCase) {
     BOOST_CHECK(matrix_a != matrix_b);
 }
 
+BOOST_AUTO_TEST_CASE(Multiply4x4MatricesCase) {
+    auto matrix_a = Matrix<float>({{1.0, 2.0, 3.0, 4.0},
+                                   {5.0, 6.0, 7.0, 8.0},
+                                   {9.0, 8.0, 7.0, 6.0},
+                                   {5.0, 4.0, 3.0, 2.0}});
+
+    auto matrix_b = Matrix<float>({{-2.0, 1.0, 2.0, 3.0},
+                                   {3.0, 3.0, 1.0, -1.0},
+                                   {4.0, 3.0, 6.0, 5.0},
+                                   {1.0, 2.0, 7.0, 8.0}});
+
+    auto result = Matrix<float>({{20, 22, 50, 48},
+                                 {44, 54, 114, 108},
+                                 {40, 58, 110, 102},
+                                 {16, 26, 46, 42}});
+
+    auto product = matrix_a * matrix_b;
+
+    BOOST_CHECK(product == result);
+}
+
 BOOST_AUTO_TEST_SUITE_END()

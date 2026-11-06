@@ -36,13 +36,36 @@ class Matrix {
 
     bool operator!=(const Matrix& rhs) const { return !(*this == rhs); }
 
-    static Matrix from_nested_list(NestedList rows) {
-        DimensionPair dimension_pair = dimensions(rows);
-        std::vector<T> flattened_data = flatten(rows);
+    Matrix<T> operator*(const Matrix& rhs) const {
+        Dimension n = this->n;
+        Dimension m = rhs.m;
+        Matrix<T> M(n, m);
 
-        return Matrix(dimension_pair.first, dimension_pair.second,
-                      flattened_data);
+        MatrixData matrix_data;
+        matrix_data.reserve(m * n);
+
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < m; col++) {
+                // For arbitrary nxm
+                matrix_data[index(row,col)] = this(row, )
+            }
+        }
+    }
+
+      const T& operator()(size_t row, size_t col) const {
+        if (is_out_of_bounds(row, col)) {
+            throw std::invalid_argument("index out of range");
+        }
+        return data[index(row, col)];
     };
+
+    T& operator()(size_t row, size_t col) {
+        if (is_out_of_bounds(row, col)) {
+            throw std::invalid_argument("index out of range");
+        }
+        return data[index(row, col)];
+    }
+
 
     static DimensionPair dimensions(NestedList rows) {
         if (rows.size() == 0) {
@@ -75,19 +98,14 @@ class Matrix {
         return matrix_data;
     };
 
-    const T& operator()(size_t row, size_t col) const {
-        if (is_out_of_bounds(row, col)) {
-            throw std::invalid_argument("index out of range");
-        }
-        return data[index(row, col)];
+    static Matrix from_nested_list(NestedList rows) {
+        DimensionPair dimension_pair = dimensions(rows);
+        std::vector<T> flattened_data = flatten(rows);
+
+        return Matrix(dimension_pair.first, dimension_pair.second,
+                      flattened_data);
     };
 
-    T& operator()(size_t row, size_t col) {
-        if (is_out_of_bounds(row, col)) {
-            throw std::invalid_argument("index out of range");
-        }
-        return data[index(row, col)];
-    }
 
     bool is_out_of_bounds(size_t row, size_t col) const {
         return ((row >= n) || (col >= m));
